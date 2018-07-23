@@ -129,7 +129,12 @@ public class SlideService {
                 SlideDataCallBack preCallBack = new SlideDataCallBack(new File(visitorContext, "pre.tmp"));
                 NativeLong lRealPlayHandle_pre = hcsdkHandler.preView(prepareView, preCallBack);
                 setEndFlag(false);
-                for(int i=0;i<config.getPrepareDuration()/1000;i++){
+                for(int i=0;i<=config.getPrepareDuration()/1000;i++){
+                    if(i == config.getPrepareDuration()/1000){
+                        logger.info("超过刷卡后的最大等待时间！");
+                        slideId = null;
+                        return;
+                    }
                     Thread.sleep(1000);
                     if(endFlag){
                         break;
